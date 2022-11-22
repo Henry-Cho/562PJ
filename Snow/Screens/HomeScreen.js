@@ -11,6 +11,7 @@ const HomeScreen = () => {
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const resort_list = useSelector((state) => state.weather.resort_list);
+    const fav_list = useSelector((state) => state.user.user_fav_list);
     const is_loading = useSelector((state) => state.weather.is_loading);
     const is_login = useSelector((state) => state.user.is_login);
     const user = useSelector((state => state.user.user));
@@ -47,14 +48,14 @@ const HomeScreen = () => {
                     return (<View key={idx} style={styles.resortBox}>
                         {resort.weather ? <>
                             <View>
-                                <Text>Highest Temperature: {resort.weather.temperature.max}</Text>
-                                <Text>Condition: {resort.weather.conditions}</Text>
+                                <Text style={styles.text}>Highest Temperature: {resort.weather.temperature.max}</Text>
+                                <Text style={styles.text}>Condition: {resort.weather.conditions}</Text>
                             </View>
-                        </> : <><Text>No Weather Info Available</Text></>}
-                        <Text>{resort.name} Resort, Utah {resort.open ? "Opened" : "Closed"}</Text>
-                        <Button title='Add' color={"#fff"} onPress={() => dispatch(addResortFB(resort, idx))}></Button>
+                        </> : <><Text style={styles.text}>No Weather Info Available</Text></>}
+                        <Text style={styles.text}>{resort.name} Resort, Utah {resort.open ? "Opened" : "Closed"}</Text>
+                        { fav_list?.findIndex((u) => u.name === resort.name) !== undefined ? <Button title='Completed' color={"#fff"} onPress={() => {}}></Button> :                        <Button title='Add' color={"#fff"} onPress={() => dispatch(addResortFB(resort, idx))}></Button> }
                     </View>)
-                }) : <Text>No Matching Resort</Text>}
+                }) : <Text style={styles.text}>No Matching Resort</Text>}
                 <View style={styles.resortBoxHidden}></View>
                 </View>
         </ScrollView>
@@ -86,6 +87,9 @@ const styles = StyleSheet.create({
     loginBtnText: {
         fontSize: 16,
         color: "#0B3E8A"
+    },
+    text: {
+        color: "#fff"
     }
     ,
     container: {

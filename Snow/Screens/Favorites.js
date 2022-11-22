@@ -31,7 +31,7 @@ const Favorites = ({ navigation}) => {
                             </View>
                         </> : <><Text>No Weather Info Available</Text></>}
                         <Text>{resort.name} Resort, Utah {resort.open ? "Opened" : "Closed"}</Text>
-                        <Button title='Favorite' color={"#fff"} onPress={() => navigation.navigate('Favorite', {name: 'Favorite'})}></Button>
+                        {/* <Button title='Favorite' color={"#fff"} onPress={() => navigation.navigate('Favorite', {name: 'Favorite'})}></Button> */}
                         {/* <Button title='Favorite' color={"#fff"} onPress={() => navigation.navigate('Favorite', {name: 'Favorite'})}></Button> */}
                     </View>)
                 }) : <Text>No Matching Resort</Text>}
