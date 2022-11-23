@@ -2,8 +2,10 @@ import { createSlice } from '@reduxjs/toolkit'
 import { auth } from "../../firebase"
 import * as firebase from "firebase";
 import { firestore } from '../../firebase';
+import { add_fav } from "./weatherSlice"
 
 const fav_list = firestore.collection("user_fav_list");
+const r_list = firestore.collection("resort_list");
 
 const initialState = {
     user: null,
@@ -75,7 +77,6 @@ export const loginFB = (id, pwd, navigation) => {
         auth
         .signInWithEmailAndPassword(id, pwd)
         .then((user) => {
-            console.log(user);
 
             dispatch(log_in({
                 user_name: user.user.displayName,
@@ -121,6 +122,7 @@ export const loginCheckFB = () => {
                     id: user.email,
                     uid: user.uid,
                 })
+                
             );
             }
             else {
@@ -139,15 +141,24 @@ export const logoutFB = (navigate) => {
     }
 }
 
-export const addResortFB = (item, index) => {
+export const addResortFB = (item) => {
     return function (dispatch, getState) {
 
         let user_info = getState().user.user;
 
         fav_list
-        .add({...item, ...user_info, index: index})
+        .add({...item, ...user_info})
         .then((doc) => {
-            dispatch(add_favorite({...item, ...user_info, index: index}))
+            dispatch(add_favorite({...item, ...user_info}))
+            r_list.doc(item.id).update({
+                usr_fav_list: firebase.firestore.FieldValue.arrayUnion(user_info.user_name)
+            });
+
+            r_list.doc(item.id).update({
+                fav_num: firebase.firestore.FieldValue.increment(1)
+            })
+
+            dispatch(add_fav({...item, ...user_info}));
         })
     }
 }
