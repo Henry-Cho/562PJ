@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TextInput, ScrollView, SafeAreaView, Button } from 'react-native';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { getUserFavorites } from '../redux/modules/userSlice'
+import { getUserFavorites, loginCheckFB } from '../redux/modules/userSlice'
 import Loading from './LoadingScreen';
 
 const Favorites = ({ navigation}) => {
@@ -12,6 +12,7 @@ const Favorites = ({ navigation}) => {
     const [text, onChangeText] = useState("");
 
     useEffect(() => {
+        dispatch(loginCheckFB());
         dispatch(getUserFavorites());
     }, [])
     

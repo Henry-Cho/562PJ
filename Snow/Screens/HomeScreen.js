@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getResortDB } from '../redux/modules/weatherSlice'
 import Loading from './LoadingScreen';
-import { addResortFB, loginCheckFB } from "../redux/modules/userSlice"
+import { addResortFB, getUserFavorites, loginCheckFB } from "../redux/modules/userSlice"
 import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
@@ -12,6 +12,8 @@ const HomeScreen = () => {
     const navigation = useNavigation();
     const resort_list = useSelector((state) => state.weather.resort_list);
     const fav_list = useSelector((state) => state.user.user_fav_list);
+
+    console.log(fav_list)
     const is_loading = useSelector((state) => state.weather.is_loading);
     const is_login = useSelector((state) => state.user.is_login);
     const user = useSelector((state => state.user.user));
@@ -26,6 +28,7 @@ const HomeScreen = () => {
     }
 
     useEffect(() => {
+        dispatch(getUserFavorites());
         dispatch(loginCheckFB());
         dispatch(getResortDB());
 
@@ -53,7 +56,8 @@ const HomeScreen = () => {
                             </View>
                         </> : <><Text style={styles.text}>No Weather Info Available</Text></>}
                         <Text style={styles.text}>{resort.name} Resort, Utah {resort.open ? "Opened" : "Closed"}</Text>
-                        { fav_list?.findIndex((u) => u.name === resort.name) !== undefined ? <Button title='Completed' color={"#fff"} onPress={() => {}}></Button> :                        <Button title='Add' color={"#fff"} onPress={() => dispatch(addResortFB(resort, idx))}></Button> }
+                        { fav_list?.findIndex((u) => u.name === resort.name) !== -1 && fav_list?.findIndex((u) => u.name === resort.name) != null ? <Button title='Completed' color={"#fff"} onPress={() => {}}></Button> :                        
+                        <Button title='Add' color={"#fff"} onPress={() => dispatch(addResortFB(resort, idx))}></Button> }
                     </View>)
                 }) : <Text style={styles.text}>No Matching Resort</Text>}
                 <View style={styles.resortBoxHidden}></View>
