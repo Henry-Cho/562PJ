@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TextInput, ScrollView, SafeAreaView, Button, TouchableOpacity, BackHandler, Alert } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getResortDB } from '../redux/modules/weatherSlice'
@@ -7,30 +7,16 @@ import Loading from './LoadingScreen';
 import { addResortFB, getUserFavorites, loginCheckFB } from "../redux/modules/userSlice"
 import { useNavigation } from '@react-navigation/native';
 
-const HomeScreen = () => {
+const Detail = (props) => {
+
+    const resort = props.route.params.data;
     const dispatch = useDispatch();
     const navigation = useNavigation();
-    const resort_list = useSelector((state) => state.weather.resorts);
     const is_loading = useSelector((state) => state.weather.is_loading);
     const is_login = useSelector((state) => state.user.is_login);
     const user = useSelector((state => state.user.user));
-    const [text, onChangeText] = useState("");
-    let filtered_list;
 
-    if (text !== "") {
-        filtered_list = resort_list?.filter((resort) => (resort.name).includes(text));
-    }
-    else {
-        filtered_list = resort_list;
-    }
-
-    useEffect(() => {
-        dispatch(loginCheckFB());
-        dispatch(getResortDB());
-    }, [text])
-    
-    return(
-        <SafeAreaView style={styles.container}>
+    return (<SafeAreaView style={styles.container}>
         {is_loading ? <><Loading /></> : <>
         {user && is_login ? <View style={styles.loginView}>
             <Text style={styles.loginText}>Hi {user?.user_name}</Text>
@@ -38,34 +24,21 @@ const HomeScreen = () => {
                 <Text style={styles.loginBtnText}>Your Favorites</Text>
             </TouchableOpacity>
         </View> : <></>}
-        <TextInput onChangeText={onChangeText} value={text} style={styles.input} placeholder="Search for a ski resort in Utah" placeholderTextColor={"#fff"}>
-                </TextInput>
         <ScrollView style={styles.container} contentContainerStyle={{flexGrow: 1, justifyContent: "center", alignItems: "center"}}>
-                <View>
-                { filtered_list?.length > 0 ? filtered_list.map((resort, idx) => {
-                    return (<View key={idx} style={styles.resortBox}>
+            <View style={styles.resortBox}>
                         {resort.weather ? <>
                             <View>
-                                <Text style={styles.text}>Highest Temperature: {resort.weather.temperature.max} F</Text>
+                                <Text style={styles.text}>Highest Temperature: {resort.weather.temperature.max}</Text>
                                 <Text style={styles.text}>Condition: {resort.weather.conditions}</Text>
                             </View>
                         </> : <><Text style={styles.text}>No Weather Info Available</Text></>}
                         <Text style={styles.text}>{resort.name} Resort, Utah {resort.open ? "Opened" : "Closed"}</Text>
                         <Text style={styles.text}>Favorite Num: {resort.fav_num}</Text>
-                        <Button title='Detail' color={"#fff"} onPress={() => navigation.navigate("Detail", {data: resort})}></Button>
-                        {/* <Button title='Add' color={"#fff"} onPress={() => dispatch(addResortFB(resort))}></Button> */}
-                        { resort?.usr_fav_list.includes(user?.id) ? <Button title='Your Favorite' color={"#fff"} onPress={() => {}}></Button> :                        
-                        <TouchableOpacity style={styles.loginBtn} onPress={() => dispatch(addResortFB(resort))}>
-                            <Text style={styles.loginBtnText}>Add Favorite</Text>
-                        </TouchableOpacity>}
-                    </View>)
-                }) : <Text style={styles.text}>No Matching Resort</Text>}
-                <View style={styles.resortBoxHidden}></View>
-                </View>
+                        <Button title='Discard' color={"#fff"} onPress={() => {}}></Button>
+            </View>
         </ScrollView>
         </>}
-        </SafeAreaView>
-    );
+        </SafeAreaView>);
 }
 
 const styles = StyleSheet.create({
@@ -108,7 +81,7 @@ const styles = StyleSheet.create({
     resortBox: {
         backgroundColor: "#1279D8",
         width: 338,
-        height: 199,
+        height: 400,
         marginBottom: 20,
         borderRadius: 20,
         padding: 12,
@@ -137,4 +110,4 @@ const styles = StyleSheet.create({
       },
 });
 
-export default HomeScreen;
+export default Detail;

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { auth } from "../../firebase"
 import * as firebase from "firebase";
 import { firestore } from '../../firebase';
-import { add_fav } from "./weatherSlice"
+import { remove_fav, add_fav } from "./weatherSlice"
 
 const fav_list = firestore.collection("user_fav_list");
 const r_list = firestore.collection("resort_list");
@@ -35,6 +35,10 @@ export const userSlice = createSlice({
         },
         add_favorite: (state, action) => {
             state.user_favorite_list.push(action.payload);
+        },
+        remove_favorite: (state, action) => {
+            let idx = state.user_favorite_list.findIndex((u) => u.id === action.payload.id && u.name === action.payload.name);
+            state.user_favorite_list.splice(idx, 1);
         }
     },
 })
@@ -54,8 +58,8 @@ export const getUserFavorites = () => {
             let u_list = [];
 
             docs.forEach((d) => {
-                if (d.data().user_name === user_info.user_name) {
-                    u_list.push(d.data());
+                if (d.data().email === user_info.id) {
+                    u_list.push({...d.data(), d_id: d.id});
                 }
             })
 
@@ -146,23 +150,44 @@ export const addResortFB = (item) => {
 
         let user_info = getState().user.user;
 
+        let email = user_info.id;
+
         fav_list
-        .add({...item, ...user_info})
+        .add({...item, email: email})
         .then((doc) => {
-            dispatch(add_favorite({...item, ...user_info}))
+            dispatch(add_favorite({...item, email: email}))
+
             r_list.doc(item.id).update({
-                usr_fav_list: firebase.firestore.FieldValue.arrayUnion(user_info.user_name)
+                usr_fav_list: firebase.firestore.FieldValue.arrayUnion(email)
             });
 
             r_list.doc(item.id).update({
                 fav_num: firebase.firestore.FieldValue.increment(1)
             })
 
-            dispatch(add_fav({...item, ...user_info}));
+            dispatch(add_fav({...item, email: email}));
+        })
+    }
+}
+
+export const removeResortFB = (item) => {
+    return function (dispatch, getState) {
+
+        fav_list.doc(item.d_id).delete()
+        .then(() => {
+            r_list.doc(item.id).update({
+                usr_fav_list: firebase.firestore.FieldValue.arrayRemove(item.email)
+            });
+
+            r_list.doc(item.id).update({
+                fav_num: firebase.firestore.FieldValue.increment(-1)
+            })
+            dispatch(remove_favorite(item));
+            dispatch(remove_fav(item));
         })
     }
 }
 // Action creators are generated for each case reducer function
-export const { log_in, set_loading, add_favorite, set_favorite } = userSlice.actions;
+export const { log_in, set_loading, add_favorite, set_favorite, remove_favorite } = userSlice.actions;
 
 export default userSlice.reducer

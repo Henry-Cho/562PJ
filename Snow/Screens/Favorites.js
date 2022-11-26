@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, SafeAreaView, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView, SafeAreaView, Button, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { getUserFavorites, loginCheckFB } from '../redux/modules/userSlice'
+import { getUserFavorites, loginCheckFB, removeResortFB } from '../redux/modules/userSlice'
 import Loading from './LoadingScreen';
 
 const Favorites = ({ navigation}) => {
@@ -31,7 +31,10 @@ const Favorites = ({ navigation}) => {
                                 <Text>Condition: {resort.weather.conditions}</Text>
                             </View>
                         </> : <><Text>No Weather Info Available</Text></>}
-                        <Text>{resort.name} Resort, Utah {resort.open ? "Opened" : "Closed"}</Text>
+                        <Text style={styles.text}>{resort.name} Resort, Utah {resort.open ? "Opened" : "Closed"}</Text>
+                        <TouchableOpacity style={styles.loginBtn} onPress={() => dispatch(removeResortFB(resort))}>
+                            <Text style={styles.loginBtnText}>Discard</Text>
+                        </TouchableOpacity>
                         {/* <Button title='Favorite' color={"#fff"} onPress={() => navigation.navigate('Favorite', {name: 'Favorite'})}></Button> */}
                         {/* <Button title='Favorite' color={"#fff"} onPress={() => navigation.navigate('Favorite', {name: 'Favorite'})}></Button> */}
                     </View>)
@@ -75,6 +78,17 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 12,
         color: "#fff"
+    },
+    loginBtn: {
+        fontSize: 16,
+        backgroundColor: 'white',
+        color: "#0B3E8A",
+        padding: 6,
+        borderRadius: 6
+    },
+    loginBtnText: {
+        fontSize: 16,
+        color: "#0B3E8A"
     },
     input: {
         height: 40,

@@ -10,6 +10,7 @@ import Favorites from "./Screens/Favorites"
 import LoginScreen from './Screens/LoginScreen';
 import SignupScreen from './Screens/SignupScreen';
 import { loginCheckFB } from './redux/modules/userSlice';
+import Detail from './Screens/Detail';
 
 const Stack = createNativeStackNavigator();
 
@@ -52,6 +53,10 @@ export default function App() {
           }
         }}
         />
+        <Stack.Screen name="Detail" component={Detail} 
+        options={({
+          title:"Detail"
+        })}/>
         <Stack.Screen name="ProTips" component={ProTips}/>
       </Stack.Navigator>
     </NavigationContainer>

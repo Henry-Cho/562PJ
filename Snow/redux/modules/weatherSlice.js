@@ -2,10 +2,6 @@ import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
 import { firestore } from '../../firebase';
 import { getUserFavorites } from "./userSlice"
-// import { auth } from "../../shared/firebase"
-// import firebase from "firebase/compat/app";
-// import { firestore } from '../../shared/firebase';
-// import moment from "moment";
 
 const r_list = firestore.collection("resort_list");
 
@@ -28,7 +24,7 @@ export const weatherSlice = createSlice({
         },
         add_fav: (state, action) => {
             let idx = state.resorts.findIndex((r) => r.name === action.payload.name);
-            state.resorts[idx].usr_fav_list.push(action.payload.user_name);
+            state.resorts[idx].usr_fav_list.push(action.payload.email);
             state.resorts[idx].fav_num += 1;
         }
         ,
@@ -38,6 +34,12 @@ export const weatherSlice = createSlice({
         add_resort_list: (state, action) => {
             state.resort_list.push(action.payload);
         },
+        remove_fav: (state, action) => {
+            let idx = state.resorts.findIndex((r) => r.name === action.payload.name);
+            let inner_idx = state.resorts[idx].usr_fav_list.findIndex((r) => r.email === action.payload.email);
+            state.resorts[idx].usr_fav_list.splice(inner_idx, 1);
+            state.resorts[idx].fav_num -= 1;
+        }
     },
 })
 
@@ -101,6 +103,6 @@ export const getResortDB = () => {
 }
 
 // Action creators are generated for each case reducer function
-export const { set_list, set_loading, add_resort_list, set_resorts, add_fav } = weatherSlice.actions;
+export const { set_list, set_loading, add_resort_list, set_resorts, add_fav, remove_fav } = weatherSlice.actions;
 
 export default weatherSlice.reducer
