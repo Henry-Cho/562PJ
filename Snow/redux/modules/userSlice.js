@@ -140,7 +140,7 @@ export const logoutFB = (navigate) => {
     return function (dispatch) {
         auth.signOut().then(() => {
             dispatch(log_out());
-            navigate('/');
+            navigate('/'); 
         })
     }
 }
