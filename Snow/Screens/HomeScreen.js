@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, SafeAreaView, Button, TouchableOpacity, BackHandler, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView, SafeAreaView, Button, TouchableOpacity, ImageBackground, BackHandler, Alert } from 'react-native';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getResortDB } from '../redux/modules/weatherSlice'
 import Loading from './LoadingScreen';
 import { addResortFB, getUserFavorites, loginCheckFB } from "../redux/modules/userSlice"
 import { useNavigation } from '@react-navigation/native';
+
+const image = { uri: "https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/638515d3a0939d79444432cd_Loading%20Page%20(1).jpg" }
+const resortImage = { uri: "https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/63851639402929e57b19f13d_Rectangle%207.jpg" }
 
 const HomeScreen = () => {
     const dispatch = useDispatch();
@@ -30,6 +33,7 @@ const HomeScreen = () => {
     }, [text])
     
     return(
+        <ImageBackground source={image} resizeMode="cover" style={styles.image}>
         <SafeAreaView style={styles.container}>
         {is_loading ? <><Loading /></> : <>
         {user && is_login ? <View style={styles.loginView}>
@@ -44,6 +48,7 @@ const HomeScreen = () => {
                 <View>
                 { filtered_list?.length > 0 ? filtered_list.map((resort, idx) => {
                     return (<View key={idx} style={styles.resortBox}>
+                        <ImageBackground source={resortImage} resizeMode="cover" style={styles.resortImage}></ImageBackground>
                         {resort.weather ? <>
                             <View>
                                 <Text style={styles.text}>Highest Temperature: {resort.weather.temperature.max} F</Text>
@@ -65,6 +70,7 @@ const HomeScreen = () => {
         </ScrollView>
         </>}
         </SafeAreaView>
+        </ImageBackground>
     );
 }
 
@@ -97,7 +103,7 @@ const styles = StyleSheet.create({
     }
     ,
     container: {
-        backgroundColor: "#0B3E8A",
+        backgroundColor: "#0B3E8",
         color: "#fff",
         flex:1,
     },
@@ -107,16 +113,20 @@ const styles = StyleSheet.create({
     },
     resortBox: {
         backgroundColor: "#1279D8",
-        width: 338,
+        flex: 1,
+        marginRight:20,
+        marginLeft: 20,
         height: 199,
         marginBottom: 20,
         borderRadius: 20,
-        padding: 12,
+        padding:12,
         color: "#fff",
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        overflow:'hidden',
+        
     },
     resortBoxHidden: {
         backgroundColor: "none",
@@ -132,9 +142,24 @@ const styles = StyleSheet.create({
         margin: 12,
         borderWidth: 1,
         padding: 10,
-        backgroundColor: "#2E335A42",
-        color: "#fff"
+        color: "#fff",
+        borderRadius: 10,
+        overflow: 'hidden',
+        shadowColor: 'black',
+        shadowRadius: 10,
+        shadowOpacity: 1,
       },
+
+      image: {
+        flex: 1,
+        justifyContent: "center"
+    },
+    resortImage: {
+        width: '110%',
+        height:'110%',
+        position: 'absolute',
+
+    },
 });
 
 export default HomeScreen;

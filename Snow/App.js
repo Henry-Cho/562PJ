@@ -30,7 +30,7 @@ export default function App() {
             headerShown: true,
             title: "Snowboard Scout",
             headerStyle: {
-              backgroundColor: '#0B3E8A'
+              backgroundColor: '#0E2C58'
             },
             headerTitleAlign: "left",
             headerTintColor: '#fff',
@@ -44,7 +44,7 @@ export default function App() {
         options={{
           title: "Favorites",
           headerStyle: {
-            backgroundColor: '#0B3E8A'
+            backgroundColor: '#0E2C58'
           },
           headerTitleAlign: "left",
           headerTintColor: '#fff',
