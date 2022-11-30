@@ -53,6 +53,7 @@ const HomeScreen = () => {
                             <View>
                                 <Text style={styles.text}>Highest Temperature: {resort.weather.temperature.max} F</Text>
                                 <Text style={styles.text}>Condition: {resort.weather.conditions}</Text>
+                                <Text style={styles.text}>Grade: {resort.grade}</Text>
                             </View>
                         </> : <><Text style={styles.text}>No Weather Info Available</Text></>}
                         <Text style={styles.text}>{resort.name} Resort, Utah {resort.open ? "Opened" : "Closed"}</Text>

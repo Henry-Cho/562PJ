@@ -21,6 +21,8 @@ export const weatherSlice = createSlice({
         },
         set_resorts: (state, action) => {
             state.resorts.push(action.payload);
+            // sort by grade character order
+            state.resorts.sort((a, b) => (a.grade).charCodeAt(0) - (b.grade).charCodeAt(0))
         },
         add_fav: (state, action) => {
             let idx = state.resorts.findIndex((r) => r.name === action.payload.name);
@@ -56,7 +58,7 @@ export const getResortDB = () => {
         dispatch(set_list([]));  
 
         const utah_resorts = ["alta", "brighton", "snowbird", "parkcity", "brianhead", "solitude", "deer-valley", "snowbasin"];
-
+        let grade;
         r_list
         .get()
         .then((docs) => {
@@ -75,8 +77,58 @@ export const getResortDB = () => {
                 axios(options)
                 .then((res) => {
                     //dispatch(add_resort_list(res.data))
+                    
+                    // grade function
+                    // using open, snowing, temperature
+                    // res.data.weather
+                    if (res.data.weather === undefined || res.data.weather === null) {
+                        grade = "F";
+                    }
 
-                    add_item = {...d.data(), ...res.data, id: d.id}
+                    if (grade != "F") {
+                        // Is it open?
+                        console.log("HelloHello")
+                        let temp;
+                        temp = parseInt(res.data.weather.temperature.max);
+                        if (res.data.open == true) {
+                            grade = "F";
+                        }
+                        else {
+                            // Is it snowing?
+                            if (!res.data.weather.conditions.includes("now")) {
+                                // Temperature
+                                if (temp > 40) {
+                                    grade = "F";
+                                }
+                                else if (temp >= 36) {
+                                    grade = "D";
+                                }
+                                else {
+                                    grade = "C";
+                                }
+                            }
+                            else {
+                                if (temp > 40) {
+                                    grade = "D";
+                                }
+                                else if (temp >= 36) {
+                                    grade = "D";
+                                }
+                                else if (temp >= 31) {
+                                    grade = "C";
+                                }
+                                else if (temp >= 0 && temp <= 25) {
+                                    grade = "A";
+                                }
+                                else {
+                                    grade = "B";
+                                }            
+                            }
+                        }
+                    }
+                    
+                    
+                    add_item = { ...d.data(), ...res.data, id: d.id, grade: grade}
 
                     dispatch(set_resorts(add_item));
                 })
