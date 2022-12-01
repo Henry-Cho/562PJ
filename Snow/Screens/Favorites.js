@@ -18,7 +18,7 @@ const Favorites = ({ navigation}) => {
         dispatch(loginCheckFB());
         dispatch(getUserFavorites());
     }, [])
-    
+
     return(
         <ImageBackground source={image} resizeMode="cover" style={styles.image}>
         <SafeAreaView style={styles.container}>
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: "space-between",
         overflow:'hidden',
-        
+
     },
     text: {
         color: "#fff"
@@ -94,14 +94,14 @@ const styles = StyleSheet.create({
     },
     loginBtn: {
         fontSize: 16,
-        backgroundColor: 'white',
+        backgroundColor: '#1279D8',
         color: "#0B3E8A",
         padding: 6,
-        borderRadius: 6
+        borderRadius: 6,
     },
     loginBtnText: {
         fontSize: 16,
-        color: "#0B3E8A"
+        color: "white"
     },
     input: {
         height: 40,
