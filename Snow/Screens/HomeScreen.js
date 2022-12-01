@@ -31,7 +31,7 @@ const HomeScreen = () => {
         dispatch(loginCheckFB());
         dispatch(getResortDB());
     }, [text])
-    
+
     return(
         <ImageBackground source={image} resizeMode="cover" style={styles.image}>
         <SafeAreaView style={styles.container}>
@@ -40,6 +40,9 @@ const HomeScreen = () => {
             <Text style={styles.loginText}>Hi {user?.user_name}</Text>
             <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate("Favorite")}>
                 <Text style={styles.loginBtnText}>Your Favorites</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate("ProTips")}>
+                <Text style={styles.loginBtnText}>Pro Tips</Text>
             </TouchableOpacity>
         </View> : <></>}
         <TextInput onChangeText={onChangeText} value={text} style={styles.input} placeholder="Search for a ski resort in Utah" placeholderTextColor={"#fff"}>
@@ -60,7 +63,7 @@ const HomeScreen = () => {
                         <Text style={styles.text}>Favorite Num: {resort.fav_num}</Text>
                         <Button title='Detail' color={"#fff"} onPress={() => navigation.navigate("Detail", {data: resort})}></Button>
                         {/* <Button title='Add' color={"#fff"} onPress={() => dispatch(addResortFB(resort))}></Button> */}
-                        { resort?.usr_fav_list.includes(user?.id) ? <Button title='Your Favorite' color={"#fff"} onPress={() => {}}></Button> :                        
+                        { resort?.usr_fav_list.includes(user?.id) ? <Button title='Your Favorite' color={"#fff"} onPress={() => {}}></Button> :
                         <TouchableOpacity style={styles.loginBtn} onPress={() => dispatch(addResortFB(resort))}>
                             <Text style={styles.loginBtnText}>Add Favorite</Text>
                         </TouchableOpacity>}
@@ -90,14 +93,14 @@ const styles = StyleSheet.create({
     },
     loginBtn: {
         fontSize: 16,
-        backgroundColor: 'white',
+        backgroundColor: '#1279D8',
         color: "#0B3E8A",
         padding: 6,
         borderRadius: 6
     },
     loginBtnText: {
         fontSize: 16,
-        color: "#0B3E8A"
+        color: "white"
     },
     text: {
         color: "#fff"
@@ -127,7 +130,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: "space-between",
         overflow:'hidden',
-        
+
     },
     resortBoxHidden: {
         backgroundColor: "none",

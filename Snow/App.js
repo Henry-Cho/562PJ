@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from 'react-redux';
 import { store } from "./redux/store"
 import HomeScreen from "./Screens/HomeScreen"
-import Resorts from "./Screens/Resorts"
 import ProTips from "./Screens/ProTips"
 import Favorites from "./Screens/Favorites"
 import LoginScreen from './Screens/LoginScreen';
@@ -20,11 +19,11 @@ export default function App() {
   return (
     <Provider store={store}>
     <NavigationContainer>
-      <Stack.Navigator> 
+      <Stack.Navigator>
         <Stack.Screen options={{ headerShown: true }} name="Login" component={LoginScreen}/>
         <Stack.Screen options={{ headerShown: true }} name="Signup" component={SignupScreen}/>
-        <Stack.Screen 
-          name="Home" 
+        <Stack.Screen
+          name="Home"
           component={HomeScreen}
           options={{
             headerShown: true,
@@ -39,7 +38,6 @@ export default function App() {
             }
           }}
           />
-        <Stack.Screen name="Resort" component={Resorts}/>
         <Stack.Screen name="Favorite" component={Favorites}
         options={{
           title: "Favorites",
@@ -53,11 +51,25 @@ export default function App() {
           }
         }}
         />
-        <Stack.Screen name="Detail" component={Detail} 
+        <Stack.Screen name="Detail" component={Detail}
         options={({
           title:"Detail"
         })}/>
-        <Stack.Screen name="ProTips" component={ProTips}/>
+        <Stack.Screen
+         name="ProTips"
+         component={ProTips}
+         options={{
+          headerShown: true,
+          title: "Pro Tips",
+          headerStyle: {
+            backgroundColor: '#0E2C58'
+          },
+          headerTitleAlign: "left",
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: '400'
+          }
+        }}/>
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>
