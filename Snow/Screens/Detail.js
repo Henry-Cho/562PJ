@@ -26,6 +26,9 @@ const Detail = (props) => {
         {is_loading ? <><Loading /></> : <>
         {user && is_login ? <View style={styles.loginView}>
             <Text style={styles.loginText}>Hi {user?.user_name}</Text>
+            <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate("Home")}>
+                <Text style={styles.loginBtnText}>Home</Text>
+            </TouchableOpacity>
             <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate("Favorite")}>
                 <Text style={styles.loginBtnText}>Your Favorites</Text>
             </TouchableOpacity>

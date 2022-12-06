@@ -67,9 +67,18 @@ export default function App() {
         }}
         />
         <Stack.Screen name="Detail" component={Detail}
-        options={({
-          title:"Detail"
-        })}/>
+        options={{
+          headerShown: true,
+          title: "Detail",
+          headerStyle: {
+            backgroundColor: '#0E2C58'
+          },
+          headerTitleAlign: "left",
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: '400'
+          }
+        }}/>
         <Stack.Screen
          name="ProTips"
          component={ProTips}
