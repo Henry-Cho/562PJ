@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, SafeAreaView, Button, TouchableOpacity, ImageBackground, BackHandler, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView, SafeAreaView, Button, TouchableOpacity, ImageBackground, Image, BackHandler, Alert, Pressable } from 'react-native';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getResortDB } from '../redux/modules/weatherSlice'
@@ -45,28 +45,71 @@ const HomeScreen = () => {
                 <Text style={styles.loginBtnText}>Pro Tips</Text>
             </TouchableOpacity>
         </View> : <></>}
-        <TextInput onChangeText={onChangeText} value={text} style={styles.input} placeholder="Search for a ski resort in Utah" placeholderTextColor={"#fff"}>
+        <TextInput onChangeText={onChangeText} value={text} style={styles.input} placeholder="Search for a ski resort in Utah" placeholderTextColor="#99A1B9">
                 </TextInput>
         <ScrollView style={styles.container} contentContainerStyle={{flexGrow: 1, justifyContent: "center", alignItems: "center"}}>
                 <View>
                 { filtered_list?.length > 0 ? filtered_list.map((resort, idx) => {
                     return (<View key={idx} style={styles.resortBox}>
                         <ImageBackground source={resortImage} resizeMode="cover" style={styles.resortImage}></ImageBackground>
+
                         {resort.weather ? <>
-                            <View>
-                                <Text style={styles.text}>Highest Temperature: {resort.weather.temperature.max} F</Text>
-                                <Text style={styles.text}>Condition: {resort.weather.conditions}</Text>
-                                <Text style={styles.text}>Grade: {resort.grade}</Text>
+                            <View style={styles.resortDataContainer}>
+                                <View style={styles.resortRow}>
+                                    <View style={styles.resortTempColumn}>
+                                        <Text style={styles.resortTemp}>{resort.weather.temperature.max} F</Text>
+                                    </View>
+                                    <View style={styles.resortIconColumn}>
+                                        <Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/638ecf2c176aded58f9dd30d_icon.png'}}/>
+                                        <Text style={styles.conditionText}>{resort.weather.conditions}</Text>
+                                    </View>
+                                </View>
+                                
+                                
                             </View>
-                        </> : <><Text style={styles.text}>No Weather Info Available</Text></>}
-                        <Text style={styles.text}>{resort.name} Resort, Utah {resort.open ? "Opened" : "Closed"}</Text>
-                        <Text style={styles.text}>Favorite Num: {resort.fav_num}</Text>
-                        <Button title='Detail' color={"#fff"} onPress={() => navigation.navigate("Detail", {data: resort})}></Button>
-                        {/* <Button title='Add' color={"#fff"} onPress={() => dispatch(addResortFB(resort))}></Button> */}
-                        { resort?.usr_fav_list.includes(user?.id) ? <Button title='Your Favorite' color={"#fff"} onPress={() => {}}></Button> :
-                        <TouchableOpacity style={styles.loginBtn} onPress={() => dispatch(addResortFB(resort))}>
-                            <Text style={styles.loginBtnText}>Add Favorite</Text>
-                        </TouchableOpacity>}
+                        </> : <><Text style={styles.noWeatherText}>No Weather Info Available</Text></>}
+                        <View style={styles.resortDataContainer}>
+                            <View style={styles.resortRow}>
+                                <View style={styles.resortColumn}>
+                                    <Text style={styles.resortTitle}>{resort.name} Resort, Utah </Text>
+                                </View>
+
+                                <View style={styles.resortColumn}>
+                                    <View style={styles.gradeWrapper}>
+                                        <Text style={styles.gradeText}>{resort.grade}</Text>
+                                    </View>
+                                    
+                                </View>
+                            
+                            </View>
+
+                            <View style={styles.resortDetailsRow}>
+                                <View style={styles.resortColumnInline}>
+                                    <Text style={styles.closedText}>{resort.open ? "Opened" : "Closed"}</Text>
+                                    <Text style={styles.favText}> {resort.fav_num} Favorites</Text>
+                                </View>
+                            </View>
+
+                            <View style={styles.resortButtonRow}>
+                                <View style={styles.resortColumn}>
+                                    <Pressable title='Learn More' style={styles.resortLearnButton} onPress={() => navigation.navigate("Detail", {data: resort})}><Text style={styles.BtnText}>Learn More</Text></Pressable>
+                                       
+                                </View>
+
+                                <View style={styles.resortColumn}>
+                                     {/* <Button title='Add' color={"#fff"} onPress={() => dispatch(addResortFB(resort))}></Button> */}
+                                     { resort?.usr_fav_list.includes(user?.id) ? <View style={styles.resortButton}><Text style={styles.BtnText}>Your Favorite</Text></View> :
+                                    <TouchableOpacity style={styles.resortButton} onPress={() => dispatch(addResortFB(resort))}>
+                                        <Text style={styles.BtnText}>Add Favorite</Text>
+                                    </TouchableOpacity>}
+                                    
+                                </View>
+                            
+                            </View>
+
+                        </View>
+                        
+
                     </View>)
                 }) : <Text style={styles.text}>No Matching Resort</Text>}
                 <View style={styles.resortBoxHidden}></View>
@@ -110,32 +153,35 @@ const styles = StyleSheet.create({
         backgroundColor: "#0B3E8",
         color: "#fff",
         flex:1,
+        paddingRight: 12,
+        paddingLeft: 12,
     },
     resorts: {
-        display: 'flex',
-        flexDirection: 'column',
+        flex:1,
+        
     },
     resortBox: {
         backgroundColor: "#1279D8",
         flex: 1,
         marginRight:20,
         marginLeft: 20,
-        height: 199,
         marginBottom: 20,
         borderRadius: 20,
         padding:12,
         color: "#fff",
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'flex-start',
-        justifyContent: "space-between",
         overflow:'hidden',
+        minWidth: '100%',
+        
 
     },
     resortBoxHidden: {
+        flex: 1, 
         backgroundColor: "none",
-        width: 338,
-        height: 199,
+        marginRight:20,
+        marginLeft: 20,
+        width:'100%',
         marginBottom: 20,
         borderRadius: 20,
         padding: 12,
@@ -164,6 +210,143 @@ const styles = StyleSheet.create({
         position: 'absolute',
 
     },
+
+    resortTemp: {
+        color: "#fff",
+        fontSize: 48,
+    },
+
+    resortDataContainer: {
+        flex: 1,
+        flexWrap: 'wrap',
+        },
+
+    resortRow: {
+        flex: 1,
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+
+         
+    },
+    
+    resortDetailsRow: {
+        flex: 1,
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+        marginBottom: 15,
+
+         
+    },
+    
+    resortButtonRow: {
+        flex: 1,
+        flexDirection: "row",
+        flexWrap: "wrap",
+
+         
+    },
+    
+
+    resortTempColumn: {
+        width:"70%",
+        paddingBottom: 70,
+       
+    },
+
+    resortIconColumn: {
+        width:"20%",
+        flex:1,
+        alignItems: 'center',
+    },
+
+    resortColumn: {
+        color: "#fff",
+        
+    },
+    
+    resortColumnInline: {
+        flex: 1,
+        flexDirection: "row",
+        flexWrap: "wrap",
+    },
+
+
+    conditionText: {
+        marginTop: 5,
+        color: "#73ABE4",
+        textAlign: "center",
+        flex: 1,
+    },
+
+
+    weatherIcon: {
+        width: 60,
+        height: 60,
+    },
+
+    gradeWrapper: {
+        backgroundColor: "#fff",
+        display: "flex",
+        width: 20,
+        height: 20,
+        alignItems: "center",
+        justifyContent: "center",
+
+
+        borderRadius: 100,
+
+    },
+
+    gradeText: {
+        color: "#0F73CF",
+        fontWeight: 'bold',
+        fontSize: 12,
+    },
+
+    noWeatherText: {
+        color: "#fff",
+        fontWeight: 'bold',
+        fontSize: 12,
+        marginBottom:80,
+    },
+
+    resortTitle: {
+        color: "#fff",
+        fontWeight: 'bold',
+        fontSize: 18,
+    },
+
+    favText: {
+        color: "#73ABE4",
+    },
+
+    closedText: {
+        color: "#73ABE4",
+        marginRight: 20,
+    },
+
+    resortButton: {
+        padding: 5,
+        backgroundColor: '#fff',
+        borderRadius: 5,
+        
+    },
+
+    resortLearnButton: {
+        padding: 5,
+        backgroundColor: '#fff',
+        borderRadius: 5,
+        marginRight: 5,
+        
+    },
+
+    BtnText: {
+        color:'#0F73CF',
+
+    }
+
 });
 
 export default HomeScreen;

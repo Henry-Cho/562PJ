@@ -1,9 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, TouchableOpacity,ImageBackground } from 'react-native'
 import { useDispatch } from 'react-redux';
 import { auth } from '../firebase';
 import { loginFB } from '../redux/modules/userSlice'
+
+const image = { uri: "https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/638515d3a0939d79444432cd_Loading%20Page%20(1).jpg" }
+const resortImage = { uri: "https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/63851639402929e57b19f13d_Rectangle%207.jpg" }
+
 
 const LoginScreen = () => {
     const dispatch = useDispatch();
@@ -21,16 +25,19 @@ const LoginScreen = () => {
         setPassword("");
     }
 
-    return (<KeyboardAvoidingView
+    return (<ImageBackground source={image} resizeMode="cover" style={styles.image}><KeyboardAvoidingView
     style={styles.container}
     behavior="padding"
     >
+        
         <View style={styles.inputContainer}>
             <TextInput
                 placeholder='Email'
                 value={email}
                 onChangeText={text => setEmail(text)}
                 style={styles.input}
+                placeholderTextColor="#99A1B9" 
+
             >
             </TextInput>
 
@@ -40,6 +47,7 @@ const LoginScreen = () => {
                 onChangeText={text => setPassword(text)}
                 style={styles.input}
                 secureTextEntry
+                placeholderTextColor="#99A1B9"
             >
             </TextInput>
         </View>
@@ -59,12 +67,15 @@ const LoginScreen = () => {
                 <Text style={styles.buttonOutlineText}>Register</Text>
             </TouchableOpacity>
         </View>
-    </KeyboardAvoidingView>)
+        
+    </KeyboardAvoidingView></ImageBackground>)
 }
 
 export default LoginScreen;
 
 const styles = StyleSheet.create({
+
+
     container: {
         justifyContent: 'center',
         alignItems: 'center',
@@ -73,16 +84,27 @@ const styles = StyleSheet.create({
     inputContainer: {
         width: '80%'
     },
-    input: {
-        backgroundColor: 'white',
-        paddingHorizontal: 15,
-        paddingVertical: 10,
-        borderRadius: 1,
-        marginTop: 5,
+
+    loginText: {
+        fontSize: 16,
+        color: "white"
     },
+
+    input: {
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+        color: "#fff",
+        borderRadius: 10,
+        overflow: 'hidden',
+        shadowColor: 'black',
+        shadowRadius: 10,
+        shadowOpacity: 1,
+      },
     buttonText: {
         color: 'white',
-        fontWeight: 200,
+        fontWeight: "bold",
         fontSize: 16,
     },
     buttonContainer: {
@@ -108,5 +130,15 @@ const styles = StyleSheet.create({
         color: '#0782F9',
         fontWeight: 200,
         fontSize: 16,
-    }
+    },
+    image: {
+        flex: 1,
+        justifyContent: "center"
+    },
+    resortImage: {
+        width: '110%',
+        height:'110%',
+        position: 'absolute',
+
+    },
 })
