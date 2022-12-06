@@ -70,7 +70,7 @@ const Favorites = ({ navigation}) => {
                             </View>
                             <View style={styles.resortButtonRow}>
                                 <TouchableOpacity style={styles.resortButton} onPress={() => dispatch(removeResortFB(resort))}>
-                                    <Text style={styles.BtnText}>Discard</Text>
+                                    <Text style={styles.BtnText}>Remove</Text>
                                 </TouchableOpacity>
                                 {/* <Button title='Favorite' color={"#fff"} onPress={() => navigation.navigate('Favorite', {name: 'Favorite'})}></Button> */}
                                 {/* <Button title='Favorite' color={"#fff"} onPress={() => navigation.navigate('Favorite', {name: 'Favorite'})}></Button> */}
