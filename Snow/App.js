@@ -20,7 +20,22 @@ export default function App() {
     <Provider store={store}>
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen options={{ headerShown: true }} name="Login" component={LoginScreen}/>
+        <Stack.Screen 
+         name="Login" 
+         component={LoginScreen}
+         options={{ 
+          headerShown: true,
+            title: "Snowboard Scout",
+            headerStyle: {
+              backgroundColor: '#0E2C58'
+            },
+            headerTitleAlign: "left",
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: '400'
+            }
+        }} 
+       />
         <Stack.Screen options={{ headerShown: true }} name="Signup" component={SignupScreen}/>
         <Stack.Screen
           name="Home"
