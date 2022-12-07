@@ -20,10 +20,10 @@ export default function App() {
     <Provider store={store}>
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen 
-         name="Login" 
+        <Stack.Screen
+         name="Login"
          component={LoginScreen}
-         options={{ 
+         options={{
           headerShown: true,
             title: "Snowboard Scout",
             headerStyle: {
@@ -34,7 +34,7 @@ export default function App() {
             headerTitleStyle: {
               fontWeight: '400'
             }
-        }} 
+        }}
        />
         <Stack.Screen options={{ headerShown: true }} name="Signup" component={SignupScreen}/>
         <Stack.Screen
@@ -67,9 +67,18 @@ export default function App() {
         }}
         />
         <Stack.Screen name="Detail" component={Detail}
-        options={({
-          title:"Detail"
-        })}/>
+        options={{
+          headerShown: true,
+          title: "Detail",
+          headerStyle: {
+            backgroundColor: '#0E2C58'
+          },
+          headerTitleAlign: "left",
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: '400'
+          }
+        }}/>
         <Stack.Screen
          name="ProTips"
          component={ProTips}
@@ -90,3 +99,10 @@ export default function App() {
     </Provider>
   );
 }
+
+
+
+
+
+
+
