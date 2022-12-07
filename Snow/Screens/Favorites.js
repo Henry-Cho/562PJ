@@ -37,7 +37,9 @@ const Favorites = ({ navigation}) => {
                                         <Text style={styles.resortTemp}>{resort.weather.temperature.max} F</Text>
                                     </View>
                                     <View style={styles.resortIconColumn}>
-                                        <Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/638ecf2c176aded58f9dd30d_icon.png'}}/>
+                                        {resort.weather.conditions == 'Snow' ? <Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/6390181f23b530db00899e34_338.png'}}/> : <Text style={styles.hiddenText}>1</Text> }
+                                        {resort.weather.conditions == 'Heavy Snow' ? <Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/6390181d5e921f53d76b2997_230.png'}}/> : <Text style={styles.hiddenText}>1</Text> }
+                                        {resort.weather.conditions == 'Mostly Cloudy then Light Snow Likely' ? <Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/6390181fcc27e91fadfb6ea6_323%20329%20368.png'}}/> : <Text style={styles.hiddenText}>1</Text> }
                                         <Text style={styles.conditionText}>{resort.weather.conditions}</Text>
                                     </View>
                                 </View>
@@ -311,6 +313,10 @@ const styles = StyleSheet.create({
     BtnText: {
         color:'#0F73CF',
 
+    },
+
+    hiddenText: {
+        display: "none"
     },
 });
 
