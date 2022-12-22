@@ -43,10 +43,10 @@ const Detail = (props) => {
                                         <Text style={styles.resortTemp}>{resort.weather.temperature.max} F</Text>
                                     </View>
                                     <View style={styles.resortIconColumn}>
-                                    {resort.weather.conditions.includes('Snow') ? <Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/6390181f23b530db00899e34_338.png'}}/> : <Text style={styles.hiddenText}>1</Text> }
-                                        {resort.weather.conditions.includes('Cloud') ? <Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/6390181df1ad11b860eaa2ad_119%20122.png'}}/> : <Text style={styles.hiddenText}>1</Text> }
-                                        {resort.weather.conditions.includes('Rain') ? <Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/6390181e23b530ee83899e33_296%20302.png'}}/> : <Text style={styles.hiddenText}>1</Text> }
-                                        {resort.weather.conditions.includes('Sun') ? <Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/6390181de99b234e0740e970_113.png'}}/> : <Text style={styles.hiddenText}>1</Text> }
+                                    {resort.weather.conditions.includes('Snow') ? <Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/6390181f23b530db00899e34_338.png'}}/> : <Text style={styles.hiddenText}></Text> }
+                                        {resort.weather.conditions.includes('Cloud') ? <Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/6390181df1ad11b860eaa2ad_119%20122.png'}}/> : <Text style={styles.hiddenText}></Text> }
+                                        {resort.weather.conditions.includes('Rain') ? <Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/6390181e23b530ee83899e33_296%20302.png'}}/> : <Text style={styles.hiddenText}></Text> }
+                                        {resort.weather.conditions.includes('Sun') ? <Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/6390181de99b234e0740e970_113.png'}}/> : <Text style={styles.hiddenText}></Text> }
                                         <Text style={styles.conditionText}>{resort.weather.conditions}</Text>
                                     </View>
                                 </View>
@@ -80,13 +80,6 @@ const Detail = (props) => {
                                 </View>
                             </View>
 
-                            </View>
-                            <View style={styles.resortButtonRow}>
-                                <TouchableOpacity style={styles.resortButton} onPress={() => {}}>
-                                    <Text style={styles.BtnText}>Detail</Text>
-                                </TouchableOpacity>
-                                {/* <Button title='Favorite' color={"#fff"} onPress={() => navigation.navigate('Favorite', {name: 'Favorite'})}></Button> */}
-                                {/* <Button title='Favorite' color={"#fff"} onPress={() => navigation.navigate('Favorite', {name: 'Favorite'})}></Button> */}
                             </View>
             </View>
         </ScrollView>

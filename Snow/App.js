@@ -51,7 +51,7 @@ export default function App() {
             headerTitleStyle: {
               fontWeight: '400'
             },
-            headerLeft: () => null,
+            headerBackVisible:false
           }}
           />
         <Stack.Screen name="Favorite" component={Favorites}

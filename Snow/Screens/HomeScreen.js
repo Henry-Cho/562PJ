@@ -64,7 +64,7 @@ const HomeScreen = () => {
                                         {resort.weather.conditions.includes('Cloud') ? <Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/6390181df1ad11b860eaa2ad_119%20122.png'}}/> : <Text style={styles.hiddenText}>1</Text> }
                                         {resort.weather.conditions.includes('Rain') ? <Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/6390181e23b530ee83899e33_296%20302.png'}}/> : <Text style={styles.hiddenText}>1</Text> }
                                         {resort.weather.conditions.includes('Sun') ? <Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/6390181de99b234e0740e970_113.png'}}/> : <Text style={styles.hiddenText}>1</Text> }
-
+                                        {resort.weather.conditions.includes('Clea') ? <Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/6390181de99b234e0740e970_113.png'}}/> : <Text style={styles.hiddenText}>1</Text> }
                                         <Text style={styles.conditionText}>{resort.weather.conditions}</Text>
                                     </View>
                                 </View>
