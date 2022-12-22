@@ -43,12 +43,21 @@ const Detail = (props) => {
                                         <Text style={styles.resortTemp}>{resort.weather.temperature.max} F</Text>
                                     </View>
                                     <View style={styles.resortIconColumn}>
-                                        <Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/638ecf2c176aded58f9dd30d_icon.png'}}/>
+                                    {resort.weather.conditions.includes('Snow') ? <Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/6390181f23b530db00899e34_338.png'}}/> : <Text style={styles.hiddenText}>1</Text> }
+                                        {resort.weather.conditions.includes('Cloud') ? <Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/6390181df1ad11b860eaa2ad_119%20122.png'}}/> : <Text style={styles.hiddenText}>1</Text> }
+                                        {resort.weather.conditions.includes('Rain') ? <Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/6390181e23b530ee83899e33_296%20302.png'}}/> : <Text style={styles.hiddenText}>1</Text> }
+                                        {resort.weather.conditions.includes('Sun') ? <Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/6390181de99b234e0740e970_113.png'}}/> : <Text style={styles.hiddenText}>1</Text> }
                                         <Text style={styles.conditionText}>{resort.weather.conditions}</Text>
                                     </View>
-                                </View>   
+                                </View>
                             </View>
-                        </> : <><Text style={styles.noWeatherText}>No Weather Info Available</Text></>}
+                        </> : <><View style={styles.resortDataContainer}>
+                            </View><View style={styles.resortRow}>
+                            <View style={styles.resortNoData}><Text style={styles.noWeatherText}>No Weather Info Available</Text>
+                            </View>
+                            <View style={styles.resortIconColumn}><Image style={styles.weatherIcon} source={{uri:'https://uploads-ssl.webflow.com/636451cd3d59430da2872c5f/6390181de99b234e0740e970_113.png'}}/>
+                            </View>
+                            </View></>}
                         <View style={styles.resortDataContainer}>
                             <View style={styles.resortRow}>
                                 <View style={styles.resortColumn}>
@@ -59,9 +68,9 @@ const Detail = (props) => {
                                     <View style={styles.gradeWrapper}>
                                         <Text style={styles.gradeText}>{resort.grade}</Text>
                                     </View>
-                                    
+
                                 </View>
-                            
+
                             </View>
 
                             <View style={styles.resortDetailsRow}>
@@ -123,7 +132,7 @@ const styles = StyleSheet.create({
     },
     resorts: {
         flex:1,
-        
+
     },
     resortBox: {
         backgroundColor: "#1279D8",
@@ -138,11 +147,11 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         overflow:'hidden',
         minWidth: '100%',
-        
+
 
     },
     resortBoxHidden: {
-        flex: 1, 
+        flex: 1,
         backgroundColor: "none",
         marginRight:20,
         marginLeft: 20,
@@ -192,9 +201,9 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         justifyContent: "space-between",
 
-         
+
     },
-    
+
     resortDetailsRow: {
         flex: 1,
         flexDirection: "row",
@@ -202,22 +211,27 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         marginBottom: 15,
 
-         
+
     },
-    
+
     resortButtonRow: {
         flex: 1,
         flexDirection: "row",
         flexWrap: "wrap",
 
-         
+
     },
-    
+
 
     resortTempColumn: {
         width:"70%",
         paddingBottom: 70,
-       
+
+    },
+    resortNoData: {
+        width:"70%",
+        paddingBottom: 20,
+
     },
 
     resortIconColumn: {
@@ -228,9 +242,9 @@ const styles = StyleSheet.create({
 
     resortColumn: {
         color: "#fff",
-        
+
     },
-    
+
     resortColumnInline: {
         flex: 1,
         flexDirection: "row",
@@ -296,7 +310,7 @@ const styles = StyleSheet.create({
         padding: 5,
         backgroundColor: '#fff',
         borderRadius: 5,
-        
+
     },
 
     resortLearnButton: {
@@ -304,7 +318,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderRadius: 5,
         marginRight: 5,
-        
+
     },
 
     BtnText: {
